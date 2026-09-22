@@ -1,5 +1,5 @@
 const UserActivity = require('../models/UserActivity');
-const Product = require('../models/product');
+const Product = require('../models/Product');
 
 // Weight given to each activity type - purchases matter far more than views
 const ACTIVITY_WEIGHTS = {

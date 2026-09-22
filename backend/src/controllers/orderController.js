@@ -1,6 +1,6 @@
 const { logActivity } = require('../middleware/activityLogger');
 const Order = require('../models/Order');
-const Cart = require('../models/cart');
+const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
 // @desc    Place a new order (checkout) using items from the user's cart
