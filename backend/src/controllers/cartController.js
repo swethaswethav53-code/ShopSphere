@@ -1,5 +1,5 @@
 const { logActivity } = require('../middleware/activityLogger');
-const Cart = require('../models/cart');
+const Cart = require('../models/Cart');
 const Product = require('../models/product');
 
 // @desc    Get logged-in user's cart
