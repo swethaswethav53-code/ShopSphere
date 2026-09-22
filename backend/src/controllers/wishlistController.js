@@ -1,5 +1,5 @@
 const { logActivity } = require('../middleware/activityLogger');
-const Product = require('../models/product'); // needed to get category for logging
+const Product = require('../models/Product'); // needed to get category for logging
 const Wishlist = require('../models/wishlist');
 
 // @desc    Get logged-in user's wishlist
