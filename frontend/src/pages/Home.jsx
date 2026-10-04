@@ -33,7 +33,7 @@ const Home = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('http://https://shopsphere-4xu4.onrender.com/api/products');
+      const res = await axios.get('https://shopsphere-4xu4.onrender.com/api/products');
       const productData = res.data.data || res.data;
       setProducts(Array.isArray(productData) ? productData : []);
     } catch (err) {

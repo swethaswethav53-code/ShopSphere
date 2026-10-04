@@ -43,7 +43,7 @@ const ProductDetails = () => {
       setReviews(reviewsRes.data);
 
       // Fetch all products to filter related/same category items
-      const allProdRes = await axios.get('http://https://shopsphere-4xu4.onrender.com/api/products');
+      const allProdRes = await axios.get('https://shopsphere-4xu4.onrender.com/api/products');
       const prodData = allProdRes.data.data || allProdRes.data;
       
       if (Array.isArray(prodData)) {

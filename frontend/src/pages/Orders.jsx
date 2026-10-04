@@ -18,7 +18,7 @@ const Orders = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
       
-      const res = await axios.get('http://https://shopsphere-4xu4.onrender.com/api/orders/myorders', config);
+      const res = await axios.get('https://shopsphere-4xu4.onrender.com/api/orders/myorders', config);
       const ordersData = res.data.data || res.data;
       setOrders(Array.isArray(ordersData) ? ordersData : []);
     } catch (err) {
@@ -33,7 +33,7 @@ const Orders = () => {
       const token = localStorage.getItem('token');
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
-      await axios.put(`http://https://shopsphere-4xu4.onrender.com/api/orders/${orderId}/cancel`, {}, config);
+      await axios.put(`https://shopsphere-4xu4.onrender.com/api/orders/${orderId}/cancel`, {}, config);
       fetchOrders();
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to cancel order');
