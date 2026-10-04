@@ -18,7 +18,7 @@ const Orders = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
       
-      const res = await axios.get('http://localhost:5000/api/orders/myorders', config);
+      const res = await axios.get('http://https://shopsphere-4xu4.onrender.com/api/orders/myorders', config);
       const ordersData = res.data.data || res.data;
       setOrders(Array.isArray(ordersData) ? ordersData : []);
     } catch (err) {
@@ -33,7 +33,7 @@ const Orders = () => {
       const token = localStorage.getItem('token');
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/cancel`, {}, config);
+      await axios.put(`http://https://shopsphere-4xu4.onrender.com/api/orders/${orderId}/cancel`, {}, config);
       fetchOrders();
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to cancel order');
@@ -47,39 +47,39 @@ const Orders = () => {
   };
 
   if (loading) {
-    return <div className="min-h-[80vh] bg-slate-950 flex items-center justify-center text-slate-400">Loading your orders...</div>;
+    return <div className="min-h-[60vh] sm:min-h-[80vh] bg-slate-950 flex items-center justify-center text-slate-400 px-4 text-center">Loading your orders...</div>;
   }
 
   return (
-    <div className="min-h-[80vh] bg-slate-950 text-slate-100 p-4 sm:p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6 border-b border-slate-800 pb-3">My Orders</h1>
+    <div className="min-h-[60vh] sm:min-h-[80vh] bg-slate-950 text-slate-100 py-4 sm:py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <h1 className="text-xl sm:text-2xl font-bold mb-5 sm:mb-6 border-b border-slate-800 pb-3">My Orders</h1>
 
         {error && <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-xl mb-6 text-sm">{error}</div>}
 
         {orders.length === 0 ? (
-          <div className="text-center py-16 bg-slate-900 border border-slate-800 rounded-2xl">
+          <div className="text-center py-12 sm:py-16 px-4 bg-slate-900 border border-slate-800 rounded-2xl">
             <p className="text-slate-400 mb-4">You haven't placed any orders yet.</p>
-            <Link to="/" className="inline-block bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-2.5 rounded-xl font-semibold transition-colors">
+            <Link to="/" className="btn-touch inline-flex items-center justify-center bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 rounded-xl font-semibold transition-colors">
               Start Shopping
             </Link>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {orders.map((order) => {
               const currentStepIndex = getStepIndex(order.status);
               const isCancelled = order.status === 'cancelled';
 
               return (
-                <div key={order._id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div key={order._id} className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl">
                   {/* Top Header: Order ID & Status */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4 mb-4">
-                    <div>
-                      <span className="text-xs text-slate-400 font-mono">Order ID: {order._id}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 border-b border-slate-800 pb-4 mb-4">
+                    <div className="min-w-0">
+                      <span className="text-xs text-slate-400 font-mono break-all">Order ID: {order._id}</span>
                       <p className="text-xs text-slate-400 mt-1">Placed on: {new Date(order.createdAt).toLocaleDateString()}</p>
                     </div>
-                    <div>
-                      <span className={`text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider ${
+                    <div className="flex-shrink-0">
+                      <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider ${
                         order.status === 'delivered' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' :
                         order.status === 'cancelled' ? 'bg-red-500/10 text-red-400 border border-red-500/30' :
                         'bg-amber-500/10 text-amber-400 border border-amber-500/30'
@@ -89,17 +89,24 @@ const Orders = () => {
                     </div>
                   </div>
 
-                  {/* Flipkart Style Order Tracking Progress Bar (Skipped if cancelled) */}
+                  {/* Order Tracking Progress Bar (Skipped if cancelled) */}
                   {!isCancelled && (
-                    <div className="mb-6 px-2 py-4 bg-slate-950/40 rounded-xl border border-slate-800/60">
-                      <div className="flex items-center justify-between relative">
-                        {/* Progress line */}
-                        <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-800 z-0 mx-8 hidden sm:block"></div>
+                    <div className="mb-5 sm:mb-6 px-1 sm:px-2 py-4 bg-slate-950/40 rounded-xl border border-slate-800/60">
+                      <div className="flex items-start justify-between relative">
+
+                        {/* Background line (circle centers-oda align: 12.5% to 87.5%) */}
+                        <div className="absolute left-[12.5%] right-[12.5%] top-3.5 -translate-y-1/2 h-1 bg-slate-800 z-0"></div>
+
+                        {/* Filled line for completed steps */}
+                        <div
+                          className="absolute left-[12.5%] top-3.5 -translate-y-1/2 h-1 bg-amber-500 z-0 transition-all"
+                          style={{ width: `${(Math.max(currentStepIndex, 0) / 3) * 75}%` }}
+                        ></div>
                         
                         {['Pending', 'Processing', 'Shipped', 'Delivered'].map((stepName, sIdx) => {
                           const isDone = sIdx <= currentStepIndex;
                           return (
-                            <div key={stepName} className="flex flex-col items-center relative z-10 flex-1">
+                            <div key={stepName} className="flex flex-col items-center relative z-10 flex-1 min-w-0">
                               <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                                 isDone 
                                   ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20' 
@@ -107,7 +114,7 @@ const Orders = () => {
                               }`}>
                                 {sIdx + 1}
                               </div>
-                              <span className={`text-[11px] mt-1.5 font-medium ${isDone ? 'text-amber-400' : 'text-slate-500'}`}>
+                              <span className={`text-[10px] sm:text-[11px] mt-1.5 font-medium text-center ${isDone ? 'text-amber-400' : 'text-slate-500'}`}>
                                 {stepName}
                               </span>
                             </div>
@@ -120,25 +127,25 @@ const Orders = () => {
                   {/* Ordered Items with Image */}
                   <div className="space-y-3 mb-4">
                     {order.items?.map((item, index) => (
-                      <div key={index} className="flex items-center justify-between gap-4 text-sm bg-slate-950/50 p-3 rounded-xl border border-slate-800/50">
-                        <div className="flex items-center gap-3">
+                      <div key={index} className="flex items-center justify-between gap-3 sm:gap-4 text-sm bg-slate-950/50 p-3 rounded-xl border border-slate-800/50">
+                        <div className="flex items-center gap-3 min-w-0">
                           <img 
                             src={item.image || 'https://via.placeholder.com/60'} 
                             alt={item.name} 
                             className="w-12 h-12 object-cover rounded-lg border border-slate-800 flex-shrink-0"
                           />
-                          <div>
-                            <span className="text-slate-200 font-medium block">{item.name}</span>
+                          <div className="min-w-0">
+                            <span className="text-slate-200 font-medium block line-clamp-2">{item.name}</span>
                             <span className="text-xs text-slate-400">Qty: {item.quantity}</span>
                           </div>
                         </div>
-                        <span className="font-semibold text-white">₹{item.price * item.quantity}</span>
+                        <span className="font-semibold text-white flex-shrink-0 whitespace-nowrap">₹{item.price * item.quantity}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Footer: Total & Cancel Button */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 border-t border-slate-800 text-sm gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 border-t border-slate-800 text-sm gap-3 sm:gap-4">
                     <div>
                       <span className="font-medium text-slate-400">Total Amount Paid: </span>
                       <span className="text-lg font-bold text-amber-400">₹{order.totalAmount}</span>
@@ -147,7 +154,7 @@ const Orders = () => {
                     {order.status === 'pending' && (
                       <button
                         onClick={() => handleCancelOrder(order._id)}
-                        className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-2 rounded-xl text-xs font-semibold transition-colors self-start sm:self-auto"
+                        className="btn-touch w-full sm:w-auto bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 px-5 rounded-xl text-xs font-semibold transition-colors"
                       >
                         Cancel Order
                       </button>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'http://https://shopsphere-4xu4.onrender.com/api',
 });
 
 // Automatically attach the JWT token (if present) to every request

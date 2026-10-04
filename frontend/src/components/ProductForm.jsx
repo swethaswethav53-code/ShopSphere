@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getCategories } from '../api/categoryService';
 
+// Shared input style (text-base on mobile stops iOS zoom on focus)
+const inputClass =
+  'w-full bg-white border rounded px-3 py-2.5 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-400';
+const labelClass = 'block text-sm font-medium mb-1';
+
 const ProductForm = ({ initialData, onSubmit, submitLabel = 'Save Product' }) => {
   const [categories, setCategories] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -68,68 +73,70 @@ const ProductForm = ({ initialData, onSubmit, submitLabel = 'Save Product' }) =>
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl space-y-4">
-      {error && <p className="bg-red-100 text-red-700 px-4 py-2 rounded">{error}</p>}
+    <form onSubmit={handleSubmit} className="w-full max-w-xl space-y-4">
+      {error && <p className="bg-red-100 text-red-700 px-4 py-2 rounded text-sm">{error}</p>}
 
       <div>
-        <label className="block text-sm font-medium mb-1">Product Name</label>
+        <label className={labelClass}>Product Name</label>
         <input
           type="text"
           name="name"
           value={form.name}
           onChange={handleChange}
           required
-          className="w-full border rounded px-3 py-2"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Description</label>
+        <label className={labelClass}>Description</label>
         <textarea
           name="description"
           value={form.description}
           onChange={handleChange}
           required
           rows={3}
-          className="w-full border rounded px-3 py-2"
+          className={inputClass}
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Price (₹)</label>
+          <label className={labelClass}>Price (₹)</label>
           <input
             type="number"
+            inputMode="numeric"
             name="price"
             value={form.price}
             onChange={handleChange}
             required
             min="0"
-            className="w-full border rounded px-3 py-2"
+            className={inputClass}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">Stock</label>
+          <label className={labelClass}>Stock</label>
           <input
             type="number"
+            inputMode="numeric"
             name="stock"
             value={form.stock}
             onChange={handleChange}
             required
             min="0"
-            className="w-full border rounded px-3 py-2"
+            className={inputClass}
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Category</label>
+        <label className={labelClass}>Category</label>
         <select
           name="category"
           value={form.category}
           onChange={handleChange}
           required
-          className="w-full border rounded px-3 py-2"
+          className={inputClass}
         >
           <option value="">Select a category</option>
           {categories.map((cat) => (
@@ -141,7 +148,7 @@ const ProductForm = ({ initialData, onSubmit, submitLabel = 'Save Product' }) =>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label className={labelClass}>
           Tags <span className="text-gray-400">(comma-separated)</span>
         </label>
         <input
@@ -150,12 +157,12 @@ const ProductForm = ({ initialData, onSubmit, submitLabel = 'Save Product' }) =>
           value={form.tags}
           onChange={handleChange}
           placeholder="running, sports, nike"
-          className="w-full border rounded px-3 py-2"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label className={labelClass}>
           Image URLs <span className="text-gray-400">(comma-separated)</span>
         </label>
         <input
@@ -164,14 +171,14 @@ const ProductForm = ({ initialData, onSubmit, submitLabel = 'Save Product' }) =>
           value={form.images}
           onChange={handleChange}
           placeholder="https://example.com/img1.jpg"
-          className="w-full border rounded px-3 py-2"
+          className={inputClass}
         />
       </div>
 
       <button
         type="submit"
         disabled={submitting}
-        className="bg-black text-white px-6 py-2 rounded disabled:opacity-50"
+        className="btn-touch w-full sm:w-auto bg-black text-white px-6 rounded text-sm sm:text-base disabled:opacity-50"
       >
         {submitting ? 'Saving...' : submitLabel}
       </button>

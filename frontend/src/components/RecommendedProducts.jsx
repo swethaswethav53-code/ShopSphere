@@ -29,9 +29,9 @@ const RecommendedProducts = ({ title = "You Might Also Like", limit = 4, exclude
   }
 
   return (
-    <div className="mt-10">
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="mt-8 sm:mt-10">
+      <h2 className="text-lg sm:text-xl font-bold text-white mb-4">{title}</h2>
+      <div className="product-grid">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
