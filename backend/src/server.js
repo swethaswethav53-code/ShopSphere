@@ -1,12 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const path = require('path');
 
-// Load environment variables before importing routes
-dotenv.config();
+// Load .env from the backend folder
+dotenv.config({
+  path: path.join(__dirname, '../.env'),
+});
 
 const cors = require('cors');
 const connectDB = require('./config/db');
-
 const errorHandler = require('./middleware/errorMiddleware');
 
 const authRoutes = require('./routes/authRoutes');
@@ -18,6 +20,10 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const recommendationRoutes = require('./routes/recommendationRoutes');
 const userRoutes = require('./routes/userRoutes');
+
+// Check JWT environment variable
+console.log('JWT_SECRET loaded:', !!process.env.JWT_SECRET);
+console.log('JWT_EXPIRE:', process.env.JWT_EXPIRE);
 
 // Connect to MongoDB
 connectDB();
